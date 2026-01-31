@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SheetStarted - สร้างใบงาน</title>
+    <style>
+      body {
+        font-family: "Tahoma", sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #f5f5f5;
+        color: #222;
+      }
+      .container {
+        max-width: 860px;
+        margin: 32px auto;
+        padding: 24px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+      h1 {
+        margin-top: 0;
+      }
+      label {
+        display: block;
+        margin-top: 16px;
+        font-weight: 600;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 8px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      .row {
+        display: flex;
+        gap: 16px;
+      }
+      .row > div {
+        flex: 1;
+      }
+      .actions {
+        margin-top: 24px;
+      }
+      button {
+        background: #0d6efd;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .note {
+        font-size: 14px;
+        color: #666;
+      }
+      .flash {
+        color: #d6336c;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>SheetStarted</h1>
+      <p class="note">อัปโหลดไฟล์ PDF หรือรูปภาพเพื่อสร้างใบงาน และดาวน์โหลดไฟล์ Word</p>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <p class="flash">{{ messages[0] }}</p>
+      {% endif %}
+      {% endwith %}
+
+      <form method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div>
+            <label>รายวิชา</label>
+            <input name="subject" required placeholder="เช่น คณิตศาสตร์" />
+          </div>
+          <div>
+            <label>เรื่อง</label>
+            <input name="lesson_title" required placeholder="เช่น สมการเชิงเส้น" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>ระดับชั้น</label>
+            <input name="grade" value="มัธยมศึกษา" />
+          </div>
+          <div>
+            <label>ระดับความยาก</label>
+            <select name="difficulty">
+              <option>ง่าย</option>
+              <option selected>ปานกลาง</option>
+              <option>ยาก</option>
+            </select>
+          </div>
+          <div>
+            <label>จำนวนข้อฝึก</label>
+            <input name="exercise_count" type="number" value="3" min="1" max="20" />
+          </div>
+        </div>
+
+        <label>มาตรฐาน/สาระการเรียนรู้</label>
+        <input name="standard" placeholder="ตัวอย่าง: สาระที่ 1" />
+
+        <label>ตัวชี้วัด</label>
+        <input name="indicator" placeholder="ตัวอย่าง: มาตรฐาน 1.1" />
+
+        <label>แท็ก (คั่นด้วยเครื่องหมาย ,)</label>
+        <input name="tags" placeholder="เช่น ระบบสุริยะ,ดาวเคราะห์" />
+
+        <label>ไฟล์ PDF หรือรูปภาพ</label>
+        <input name="files" type="file" multiple required />
+
+        <div class="actions">
+          <button type="submit">สร้างใบงาน</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
